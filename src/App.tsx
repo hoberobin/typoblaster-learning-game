@@ -14,6 +14,9 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
 
   const openPanel = (mode: PanelMode) => {
+    if (engine.snapshot.status === "playing") {
+      engine.pause();
+    }
     setPanelMode(mode);
     setPanelOpen(true);
   };
