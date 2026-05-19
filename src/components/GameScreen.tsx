@@ -70,7 +70,12 @@ export function GameScreen({
       <section className="game-frame">
         <Hud snapshot={snapshot} />
 
-        <div className="canvas-wrap">
+        <div
+          className="canvas-wrap"
+          onPointerDown={() => {
+            if (isPlaying) inputRef.current?.focus();
+          }}
+        >
           <canvas ref={canvasRef} aria-label="TypoBlaster word creature game canvas" />
 
           {isTitle && (
@@ -102,41 +107,37 @@ export function GameScreen({
           {isGameOver && <GameOverScreen snapshot={snapshot} onRestart={onRestart} onTitle={onTitle} />}
         </div>
 
-        <div className="typing-dock">
-          <label htmlFor="typing-input">Type here on iPad or use your keyboard</label>
-          <input
-            ref={inputRef}
-            id="typing-input"
-            className="typing-input"
-            type="text"
-            autoCapitalize="none"
-            autoComplete="off"
-            autoCorrect="off"
-            inputMode="text"
-            spellCheck={false}
-            value={typedValue}
-            disabled={!isPlaying}
-            placeholder={isPlaying ? "Tap here, then type" : "Start a run"}
-            onKeyDown={(event) => {
-              if (event.key === "Escape") {
-                onPause();
-                return;
-              }
-              if (event.key === "Backspace" && typedValue.length === 0) {
-                onBackspace();
-              }
-            }}
-            onChange={(event) => {
-              const next = event.target.value;
-              if (next.length < typedValue.length) {
-                onBackspace();
-              } else {
-                onTextInput(next.slice(typedValue.length));
-              }
-              setTypedValue("");
-            }}
-          />
-        </div>
+        <input
+          ref={inputRef}
+          className="screen-reader-typing-input"
+          type="text"
+          aria-label="Typing input"
+          autoCapitalize="none"
+          autoComplete="off"
+          autoCorrect="off"
+          inputMode="text"
+          spellCheck={false}
+          value={typedValue}
+          disabled={!isPlaying}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              onPause();
+              return;
+            }
+            if (event.key === "Backspace" && typedValue.length === 0) {
+              onBackspace();
+            }
+          }}
+          onChange={(event) => {
+            const next = event.target.value;
+            if (next.length < typedValue.length) {
+              onBackspace();
+            } else {
+              onTextInput(next.slice(typedValue.length));
+            }
+            setTypedValue("");
+          }}
+        />
       </section>
     </main>
   );

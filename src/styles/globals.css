@@ -121,7 +121,7 @@ p {
 
 .active-run .game-frame {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
   min-height: 0;
 }
 
@@ -184,60 +184,19 @@ p {
 
 .active-run .canvas-wrap {
   width: 100%;
-  height: min(56.25vw, calc(100dvh - 160px));
+  height: min(56.25vw, calc(100dvh - 105px));
   min-height: 260px;
   aspect-ratio: auto;
 }
 
-.typing-dock {
-  display: grid;
-  gap: 8px;
-  border-top: 3px solid var(--border);
-  background: #0b0f1a;
-  padding: 12px;
-}
-
-.active-run .typing-dock {
-  grid-template-columns: auto minmax(160px, 1fr);
-  align-items: center;
-  gap: 10px;
-  padding: 7px 10px;
-}
-
-.typing-dock label {
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.active-run .typing-dock label {
-  font-size: 0.66rem;
-}
-
-.typing-input {
-  width: 100%;
-  border: 3px solid var(--border);
-  background: var(--panel-2);
-  color: var(--text);
-  min-height: 52px;
-  padding: 10px 14px;
-  font-size: clamp(1.15rem, 4vw, 1.55rem);
-  font-weight: 700;
-  letter-spacing: 0;
-  text-transform: lowercase;
-  box-shadow: 4px 4px 0 #000;
-}
-
-.active-run .typing-input {
-  min-height: 40px;
-  padding: 6px 10px;
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  box-shadow: 3px 3px 0 #000;
-}
-
-.typing-input:disabled {
-  opacity: 0.6;
+.screen-reader-typing-input {
+  position: fixed;
+  left: -1000px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 canvas {
@@ -516,12 +475,8 @@ canvas {
   }
 
   .active-run .canvas-wrap {
-    height: min(56.25vw, calc(100dvh - 210px));
+    height: min(56.25vw, calc(100dvh - 150px));
     min-height: 220px;
-  }
-
-  .active-run .typing-dock {
-    grid-template-columns: 1fr;
   }
 
   .active-run .hud-bar {
