@@ -46,8 +46,8 @@ export function GameScreen({
     <main className={`game-shell ${hasRunStarted ? "active-run" : ""}`}>
       <section className={`game-header ${hasRunStarted ? "compact" : ""}`}>
         <div>
-          {!hasRunStarted && <p className="eyebrow">Word Creature Arcade</p>}
-          <h1>TypoBlaster</h1>
+          {!hasRunStarted && <p className="eyebrow">Pond Typing Arcade</p>}
+          <h1>Frog Zap Words</h1>
         </div>
         <div className="header-actions">
           {!hasRunStarted && (
@@ -76,14 +76,14 @@ export function GameScreen({
             if (isPlaying) inputRef.current?.focus();
           }}
         >
-          <canvas ref={canvasRef} aria-label="TypoBlaster word creature game canvas" />
+          <canvas ref={canvasRef} aria-label="Frog Zap Words typing pond game canvas" />
 
           {isTitle && (
             <div className="start-overlay">
               <section className="modal-card">
                 <p className="eyebrow">Ready?</p>
-                <h2>Type the word to zap the creature.</h2>
-                <p>Finish words before they reach your buddy.</p>
+                <h2>Type the word to catch the fly.</h2>
+                <p>The yellow letter shows what your frog needs next.</p>
                 <button className="retro-button primary" onClick={onStart}>
                   Press Enter to Start
                 </button>
@@ -96,7 +96,7 @@ export function GameScreen({
               <section className="modal-card pause-card">
                 <p className="eyebrow">Paused</p>
                 <h2>Paused</h2>
-                <p>Press Escape or the Resume button to keep going.</p>
+                <p>Press Escape or Resume to hop back in.</p>
                 <button className="retro-button primary" onClick={onResume}>
                   Resume
                 </button>

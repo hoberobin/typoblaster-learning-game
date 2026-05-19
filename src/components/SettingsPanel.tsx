@@ -26,13 +26,13 @@ export function SettingsPanel({ open, mode, settings, onChange, onClose }: Setti
         {mode === "help" ? (
           <section className="modal-card">
             <p className="eyebrow">How to Play</p>
-            <h1>Help your buddy.</h1>
+            <h1>Feed the frog.</h1>
             <ol className="how-list">
-              <li>A creature shows up with a word.</li>
+              <li>A fly floats in with a word.</li>
               <li>Type the word from left to right.</li>
-              <li>The yellow letter is the next one to press.</li>
-              <li>Finish the word to zap the creature and build a streak.</li>
-              <li>Keep creatures from reaching your helper buddy.</li>
+              <li>The yellow letter is the next sound or letter to press.</li>
+              <li>Finish the word to flick the frog tongue and build a streak.</li>
+              <li>Catch flies before they cross the lily pad line.</li>
             </ol>
           </section>
         ) : (

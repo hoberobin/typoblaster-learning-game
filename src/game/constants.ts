@@ -20,4 +20,4 @@ export const DEFAULT_SETTINGS: GameSettings = {
   gradeBand: "k2",
 };
 
-export const CREATURE_COLORS = ["#79ffcf", "#f9dc5c", "#ff8fb3", "#9db4ff", "#b8f57a"];
+export const CREATURE_COLORS = ["#f0b429", "#ff8cab", "#8bd7ff", "#d6f26b", "#f7f2c5"];

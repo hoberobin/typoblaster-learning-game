@@ -8,10 +8,10 @@ export function TitleScreen({ onStart, onHelp, onSettings }: TitleScreenProps) {
   return (
     <main className="screen-centered">
       <section className="title-card">
-        <p className="eyebrow">Word Creature Arcade</p>
-        <h1>TypoBlaster</h1>
-        <p className="subtitle">Type words. Zap creatures. Keep your buddy safe.</p>
-        <p>Finish each word before the creature reaches your helper buddy.</p>
+        <p className="eyebrow">Pond Typing Arcade</p>
+        <h1>Frog Zap Words</h1>
+        <p className="subtitle">Type the word. Flick the tongue. Catch the fly.</p>
+        <p>Watch the yellow letter, then type each word from left to right.</p>
 
         <div className="menu-stack">
           <button className="retro-button primary" onClick={onStart}>
@@ -26,9 +26,9 @@ export function TitleScreen({ onStart, onHelp, onSettings }: TitleScreenProps) {
         </div>
 
         <div className="instruction-strip" aria-label="Core loop">
-          <span>Read word</span>
-          <span>Type letters</span>
-          <span>Zap creature</span>
+          <span>Spot fly</span>
+          <span>Type word</span>
+          <span>Zap snack</span>
         </div>
       </section>
     </main>

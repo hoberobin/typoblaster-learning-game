@@ -1,6 +1,6 @@
-# TypoBlaster Learning Game
+# Frog Zap Words Learning Game
 
-TypoBlaster is a browser-based word typing game for K-8 learners. Kids type highlighted words to zap playful creatures before they reach their helper buddy.
+Frog Zap Words is a browser-based word typing game for K-8 learners. Kids type highlighted words to help a frog zap word-carrying flies before they reach the lily pad line.
 
 ## Local Development
 
@@ -30,9 +30,9 @@ In Render, create a new Blueprint or Static Site from this GitHub repo. Render's
 
 ---
 
-# Original TypoBlaster Codex Build Package
+# Original Build Package
 
-This package defines the complete MVP for **TypoBlaster**, a browser-based infinite arcade typing shooter.
+This package originally defined a browser-based infinite arcade typing shooter and now implements the frog pond learning retheme.
 
 The project is intentionally split into:
 

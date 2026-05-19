@@ -1,5 +1,4 @@
 import type { GameSnapshot } from "../game/types";
-import { formatTime } from "./format";
 
 type HudProps = {
   snapshot: GameSnapshot;
@@ -17,15 +16,15 @@ export function Hud({ snapshot }: HudProps) {
         <strong>{snapshot.score.toString().padStart(6, "0")}</strong>
       </div>
       <div className="hud-stat">
-        <span>Time</span>
-        <strong>{formatTime(snapshot.elapsedSeconds)}</strong>
-      </div>
-      <div className="hud-stat">
         <span>Words</span>
         <strong>{snapshot.wordsCompleted}</strong>
       </div>
+      <div className="hud-stat">
+        <span>Streak / Level</span>
+        <strong>x{snapshot.streak} L{snapshot.level}</strong>
+      </div>
       <div className="hud-stat current-word-stat">
-        <span>Word</span>
+        <span>Fly Word</span>
         <strong>{wordProgress}</strong>
       </div>
       <div className="hud-stat">
@@ -33,7 +32,7 @@ export function Hud({ snapshot }: HudProps) {
         <strong>{snapshot.accuracy}%</strong>
       </div>
       <div className="hud-stat danger">
-        <span>Energy</span>
+        <span>Frog Focus</span>
         <strong>{renderLives(snapshot.lives)}</strong>
       </div>
     </section>
@@ -41,6 +40,6 @@ export function Hud({ snapshot }: HudProps) {
 }
 
 function renderLives(lives: number) {
-  if (lives <= 0) return "none";
+  if (lives <= 0) return "rest";
   return Array.from({ length: lives }, () => "♥").join(" ");
 }

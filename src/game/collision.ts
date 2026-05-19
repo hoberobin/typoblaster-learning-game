@@ -20,7 +20,7 @@ export function completeCreature(state: GameState, creature: Creature) {
   const points = 80 + creature.word.length * 20 + state.streak * 8 + creature.tier * 35;
   state.score += points;
   addBurst(state, creature.x, creature.y, creature.color);
-  addFloatingText(state, `Zapped! +${points}`, creature.x, creature.y - 38);
+  addFloatingText(state, `Snack! +${points}`, creature.x, creature.y - 38);
 }
 
 export function resolveBreaches(state: GameState, playDamage: () => void, playGameOver: () => void) {
@@ -35,7 +35,7 @@ export function resolveBreaches(state: GameState, playDamage: () => void, playGa
     state.streak = 0;
     state.lastDamageAt = state.elapsedSeconds;
     state.shakeTime = state.settings.reducedMotion ? 0 : 0.28;
-    addFloatingText(state, "Try the next word!", creature.x, DANGER_LINE_Y - 56, "danger");
+    addFloatingText(state, "Next fly!", creature.x, DANGER_LINE_Y - 56, "danger");
     playDamage();
 
     if (state.lives <= 0) {
@@ -66,7 +66,7 @@ export function addMistakeFeedback(state: GameState, creature: Creature | undefi
   state.shakeTime = state.settings.reducedMotion ? 0 : 0.1;
   addFloatingText(
     state,
-    "Oops, keep going",
+    "Watch the yellow letter",
     creature?.x ?? 480,
     creature ? creature.y - 62 : 230,
     "danger",
