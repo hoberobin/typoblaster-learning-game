@@ -72,6 +72,14 @@ p {
   padding: 14px 0;
 }
 
+.game-shell.active-run {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 6px 0;
+}
+
 .game-header {
   display: flex;
   justify-content: space-between;
@@ -81,9 +89,14 @@ p {
 }
 
 .game-header.compact h1 {
-  font-size: clamp(1.45rem, 3vw, 2.25rem);
+  font-size: clamp(1.1rem, 2.4vw, 1.8rem);
   line-height: 1;
   text-shadow: 2px 2px 0 #000;
+}
+
+.game-header.compact {
+  gap: 10px;
+  margin-bottom: 5px;
 }
 
 .eyebrow {
@@ -106,6 +119,12 @@ p {
   box-shadow: 0 24px 60px var(--shadow);
 }
 
+.active-run .game-frame {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 0;
+}
+
 .hud-bar {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -120,6 +139,10 @@ p {
   padding: 12px 14px;
 }
 
+.active-run .hud-stat {
+  padding: 7px 10px;
+}
+
 .hud-stat span {
   display: block;
   color: var(--muted);
@@ -127,11 +150,19 @@ p {
   text-transform: uppercase;
 }
 
+.active-run .hud-stat span {
+  font-size: 0.66rem;
+}
+
 .hud-stat strong {
   display: block;
   overflow-wrap: anywhere;
   color: var(--accent-2);
   font-size: clamp(1rem, 3.8vw, 1.3rem);
+}
+
+.active-run .hud-stat strong {
+  font-size: clamp(0.9rem, 2.3vw, 1.1rem);
 }
 
 .hud-stat.danger strong,
@@ -147,6 +178,13 @@ p {
   background: #05070d;
 }
 
+.active-run .canvas-wrap {
+  width: 100%;
+  height: min(56.25vw, calc(100dvh - 160px));
+  min-height: 260px;
+  aspect-ratio: auto;
+}
+
 .typing-dock {
   display: grid;
   gap: 8px;
@@ -155,11 +193,22 @@ p {
   padding: 12px;
 }
 
+.active-run .typing-dock {
+  grid-template-columns: auto minmax(160px, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+}
+
 .typing-dock label {
   color: var(--muted);
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.active-run .typing-dock label {
+  font-size: 0.66rem;
 }
 
 .typing-input {
@@ -174,6 +223,13 @@ p {
   letter-spacing: 0;
   text-transform: lowercase;
   box-shadow: 4px 4px 0 #000;
+}
+
+.active-run .typing-input {
+  min-height: 40px;
+  padding: 6px 10px;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  box-shadow: 3px 3px 0 #000;
 }
 
 .typing-input:disabled {
@@ -247,6 +303,12 @@ canvas {
   cursor: pointer;
   text-transform: uppercase;
   box-shadow: 4px 4px 0 #000;
+}
+
+.active-run .retro-button {
+  min-height: 38px;
+  padding: 8px 10px;
+  box-shadow: 3px 3px 0 #000;
 }
 
 .retro-button:hover {
@@ -372,6 +434,11 @@ canvas {
     flex-direction: column;
   }
 
+  .game-shell.active-run .game-header {
+    align-items: center;
+    flex-direction: row;
+  }
+
   .header-actions {
     align-items: stretch;
     display: grid;
@@ -381,10 +448,24 @@ canvas {
     max-width: none;
   }
 
+  .active-run .header-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    width: auto;
+  }
+
   .header-actions .retro-button {
     width: 100%;
     min-height: 44px;
     padding: 10px 8px;
+  }
+
+  .active-run .header-actions .retro-button {
+    width: auto;
+    min-height: 36px;
+    padding: 7px 9px;
+    font-size: 0.78rem;
   }
 
   .game-header {
@@ -394,6 +475,10 @@ canvas {
   .hud-bar,
   .instruction-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .active-run .hud-bar {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .hud-stat {
@@ -424,6 +509,19 @@ canvas {
 
   .canvas-wrap {
     min-height: 172px;
+  }
+
+  .active-run .canvas-wrap {
+    height: min(56.25vw, calc(100dvh - 210px));
+    min-height: 220px;
+  }
+
+  .active-run .typing-dock {
+    grid-template-columns: 1fr;
+  }
+
+  .active-run .hud-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .retro-button {

@@ -43,7 +43,7 @@ export function GameScreen({
   }, [isPlaying, snapshot.currentWord]);
 
   return (
-    <main className="game-shell">
+    <main className={`game-shell ${hasRunStarted ? "active-run" : ""}`}>
       <section className={`game-header ${hasRunStarted ? "compact" : ""}`}>
         <div>
           {!hasRunStarted && <p className="eyebrow">Word Creature Arcade</p>}
