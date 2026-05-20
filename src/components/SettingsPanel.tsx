@@ -61,6 +61,7 @@ export function SettingsPanel({ open, mode, settings, onChange, onClose }: Setti
                 <option value="relaxed">Relaxed</option>
                 <option value="normal">Normal</option>
                 <option value="challenge">Challenge</option>
+                <option value="progressive">Progressive</option>
               </select>
             </label>
 
@@ -83,7 +84,7 @@ export function SettingsPanel({ open, mode, settings, onChange, onClose }: Setti
             </label>
 
             <label className="setting-row">
-              <span>Sound Effects</span>
+              <span>Sound / Music</span>
               <input
                 type="checkbox"
                 checked={settings.soundEnabled}

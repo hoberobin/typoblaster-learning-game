@@ -7,16 +7,18 @@ export const PLAYER_Y = GAME_HEIGHT - 74;
 export const FIRE_ORIGIN_Y = GAME_HEIGHT - 132;
 export const DANGER_LINE_Y = GAME_HEIGHT - 58;
 
-export const MAX_CREATURES = 4;
+export const MAX_CREATURES = 24;
 export const MAX_LETTER_BURSTS = 40;
 export const MAX_PARTICLES = 180;
 export const MAX_FLOATING_TEXTS = 30;
+export const SWARM_ROUND_SECONDS = 25;
+export const BOSS_WARNING_SECONDS = 3.2;
 
 export const DEFAULT_SETTINGS: GameSettings = {
   reducedMotion: false,
   screenShake: true,
   soundEnabled: true,
-  pace: "normal",
+  pace: "progressive",
   gradeBand: "k2",
 };
 

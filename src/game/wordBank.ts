@@ -367,6 +367,25 @@ const g68Tier3 = [
   "visualization",
 ];
 
+const rareProgressiveWords = [
+  "azure",
+  "jigsaw",
+  "quiver",
+  "zephyr",
+  "oxidize",
+  "jubilant",
+  "quizzical",
+  "xylophone",
+  "juxtapose",
+  "labyrinth",
+  "mnemonic",
+  "quarantine",
+  "rhythmical",
+  "synthesize",
+  "lexicography",
+  "photosynthesis",
+];
+
 export const WORD_BANK: WordEntry[] = [
   ...entries("k2", 1, k2Tier1),
   ...entries("k2", 2, k2Tier2),
@@ -377,10 +396,30 @@ export const WORD_BANK: WordEntry[] = [
   ...entries("g68", 1, g68Tier1),
   ...entries("g68", 2, g68Tier2),
   ...entries("g68", 3, g68Tier3),
+  ...entries("g68", 3, rareProgressiveWords),
 ];
 
 export function getWordsForBand(band: GradeBand, maxTier: WordTier) {
   return WORD_BANK.filter((entry) => entry.band === band && entry.tier <= maxTier);
+}
+
+export function getRecoveryWords() {
+  return WORD_BANK.filter((entry) => entry.band === "k2" && entry.tier === 1 && entry.word.length <= 3);
+}
+
+export function getProgressiveWords(band: GradeBand, level: number) {
+  const targetBand: GradeBand = level >= 6 ? "g68" : level >= 4 && band === "k2" ? "g35" : band;
+  const maxTier: WordTier = level >= 5 ? 3 : level >= 3 ? 2 : 1;
+  const minimumLength = Math.min(11, 2 + level);
+  const rareLetters = /[jqxzvy]/;
+  const words = WORD_BANK.filter((entry) => {
+    if (entry.band !== targetBand || entry.tier > maxTier) return false;
+    if (level < 3) return true;
+    if (entry.word.length >= minimumLength) return true;
+    return level >= 5 && rareLetters.test(entry.word);
+  });
+
+  return words.length > 0 ? words : getWordsForBand(targetBand, maxTier);
 }
 
 function entries(band: GradeBand, tier: WordTier, words: string[]): WordEntry[] {

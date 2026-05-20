@@ -19,6 +19,18 @@ npm run build
 
 The built static site is emitted to `dist/`.
 
+## Firebase Multiplayer
+
+The app uses the Firebase Web SDK and Firestore project `flies-eb316` for a single permanent session at `sessions/permanent`. Player presence and scores live under `sessions/permanent/players`, with throttled score writes to keep costs low.
+
+Deploy the included Firestore rules before sharing the game publicly:
+
+```bash
+firebase deploy --only firestore:rules
+```
+
+The rules and client both stop writes once the session is 14 days old.
+
 ## Render Deployment
 
 This repo includes `render.yaml` for Render Blueprint deployment as a static site:

@@ -29,7 +29,10 @@ export function loadSettings(): GameSettings {
       ...DEFAULT_SETTINGS,
       ...parsed,
       pace:
-        parsed.pace === "relaxed" || parsed.pace === "challenge"
+        parsed.pace === "relaxed" ||
+        parsed.pace === "normal" ||
+        parsed.pace === "challenge" ||
+        parsed.pace === "progressive"
           ? parsed.pace
           : DEFAULT_SETTINGS.pace,
       gradeBand:

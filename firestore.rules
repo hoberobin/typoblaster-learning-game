@@ -1,0 +1,42 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function underSessionLock() {
+      return !exists(/databases/$(database)/documents/sessions/permanent)
+        || request.time.toMillis()
+          < get(/databases/$(database)/documents/sessions/permanent).data.expiresAtMs;
+    }
+
+    match /sessions/{sessionId} {
+      allow read: if true;
+      allow create: if sessionId == "permanent";
+      allow update: if sessionId == "permanent" && underSessionLock();
+      allow delete: if false;
+
+      match /players/{playerId} {
+        allow read: if true;
+        allow create, update: if sessionId == "permanent" && underSessionLock();
+        allow delete: if false;
+      }
+
+      match /leaderboard/{entryId} {
+        allow read: if true;
+        allow create, update: if sessionId == "permanent" && underSessionLock();
+        allow delete: if false;
+      }
+
+      match /sync/{syncId} {
+        allow read: if true;
+        allow create, update: if sessionId == "permanent" && underSessionLock();
+        allow delete: if false;
+      }
+
+      match /keyEvents/{eventId} {
+        allow read: if true;
+        allow create: if sessionId == "permanent" && underSessionLock();
+        allow update, delete: if false;
+      }
+    }
+  }
+}
