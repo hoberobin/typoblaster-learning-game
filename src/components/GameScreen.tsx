@@ -1,11 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import type { GameSnapshot } from "../game/types";
+import type { MultiplayerPlayer, TeamLeaderboardEntry } from "../multiplayer/types";
 import { GameOverScreen } from "./GameOverScreen";
 import { Hud } from "./Hud";
+import { ScoreboardBar } from "./ScoreboardBar";
 
 type GameScreenProps = {
   canvasRef: (canvas: HTMLCanvasElement | null) => void;
   snapshot: GameSnapshot;
+  players: MultiplayerPlayer[];
+  leaderboard: TeamLeaderboardEntry[];
+  currentLeaderboardId: string;
+  currentPlayerId?: string;
+  leaderId: string;
   onStart: () => void;
   onRestart: () => void;
   onTitle: () => void;
@@ -13,6 +20,7 @@ type GameScreenProps = {
   onSettings: () => void;
   onPause: () => void;
   onResume: () => void;
+  onBonusAnswer: (correct: boolean) => void;
   onTextInput: (value: string) => void;
   onBackspace: () => void;
 };
@@ -27,8 +35,14 @@ export function GameScreen({
   onSettings,
   onPause,
   onResume,
+  onBonusAnswer,
   onTextInput,
   onBackspace,
+  players,
+  leaderboard,
+  currentLeaderboardId,
+  currentPlayerId,
+  leaderId,
 }: GameScreenProps) {
   const [typedValue, setTypedValue] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -68,6 +82,12 @@ export function GameScreen({
       </section>
 
       <section className="game-frame">
+        <ScoreboardBar
+          players={players}
+          currentPlayerId={currentPlayerId}
+          leaderId={leaderId}
+          teamLettersPerMinute={snapshot.teamLettersPerMinute}
+        />
         <Hud snapshot={snapshot} />
 
         <div
@@ -77,6 +97,13 @@ export function GameScreen({
           }}
         >
           <canvas ref={canvasRef} aria-label="Frog Zap Words typing pond game canvas" />
+
+          {snapshot.currentPlayerCroaked && !isGameOver && (
+            <div className="croaked-banner" role="status">
+              <strong>YOU CROAKED</strong>
+              <span>Watch your comrades finish the swarm.</span>
+            </div>
+          )}
 
           {isTitle && (
             <div className="start-overlay">
@@ -104,7 +131,17 @@ export function GameScreen({
             </div>
           )}
 
-          {isGameOver && <GameOverScreen snapshot={snapshot} onRestart={onRestart} onTitle={onTitle} />}
+          {isGameOver && (
+            <GameOverScreen
+              snapshot={snapshot}
+              players={players.slice(0, 6)}
+              leaderboard={leaderboard}
+              currentLeaderboardId={currentLeaderboardId}
+              onRestart={onRestart}
+              onTitle={onTitle}
+              onBonusAnswer={onBonusAnswer}
+            />
+          )}
         </div>
 
         <input
@@ -118,7 +155,7 @@ export function GameScreen({
           inputMode="text"
           spellCheck={false}
           value={typedValue}
-          disabled={!isPlaying}
+          disabled={!isPlaying || snapshot.currentPlayerCroaked}
           onKeyDown={(event) => {
             if (event.key === "Escape") {
               onPause();
@@ -133,7 +170,8 @@ export function GameScreen({
             if (next.length < typedValue.length) {
               onBackspace();
             } else {
-              onTextInput(next.slice(typedValue.length));
+              const added = next.slice(typedValue.length);
+              onTextInput(added);
             }
             setTypedValue("");
           }}

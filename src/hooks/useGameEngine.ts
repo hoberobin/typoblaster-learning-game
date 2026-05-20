@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { GameEngine } from "../game/GameEngine";
 import { loadSettings, saveSettings } from "../game/storage";
-import type { GameSettings, GameSnapshot } from "../game/types";
+import type { CoopPlayer, GameSettings, GameSnapshot, GameSyncState } from "../game/types";
 
 const initialSnapshot: GameSnapshot = {
   status: "title",
@@ -10,6 +10,10 @@ const initialSnapshot: GameSnapshot = {
   lives: 3,
   streak: 0,
   level: 1,
+  teamLettersPerMinute: 0,
+  roundNumber: 1,
+  roundPhase: "intro",
+  roundTimeRemaining: 0,
   accuracy: 100,
   elapsedSeconds: 0,
   longestStreak: 0,
@@ -19,7 +23,16 @@ const initialSnapshot: GameSnapshot = {
   levelReached: 1,
   currentWord: "",
   typedIndex: 0,
+  assignedPlayerName: "",
+  assignedPlayerEmoji: "",
+  teamFlyCount: 0,
   gradeBand: "k2",
+  hardestWord: "",
+  roundComplete: false,
+  croakedPlayerIds: [],
+  currentPlayerCroaked: false,
+  currentPlayerMisses: 0,
+  currentPlayerMissesAllowed: 3,
 };
 
 export function useGameEngine() {
@@ -89,6 +102,19 @@ export function useGameEngine() {
     restart: () => engineRef.current?.restart(),
     pause: () => engineRef.current?.pause(),
     resume: () => engineRef.current?.resume(),
+    awardBonusPoints: (points: number) => engineRef.current?.awardBonusPoints(points),
+    playJoinCroak: () => engineRef.current?.playJoinCroak(),
+    setSyncHost: (isHost: boolean) => engineRef.current?.setSyncHost(isHost),
+    getSyncState: (generation: number, hostId: string) =>
+      engineRef.current?.getSyncState(generation, hostId),
+    applySyncState: (sync: GameSyncState) => engineRef.current?.applySyncState(sync),
+    setInputBroadcasters: (textInput: (value: string) => void, backspace: () => void) =>
+      engineRef.current?.setInputBroadcasters(textInput, backspace),
+    handleRemoteTextInput: (playerId: string, value: string) =>
+      engineRef.current?.handleRemoteTextInput(playerId, value),
+    handleRemoteBackspace: (playerId: string) => engineRef.current?.handleRemoteBackspace(playerId),
+    setCoopPlayers: (players: CoopPlayer[], currentPlayerId: string) =>
+      engineRef.current?.setCoopPlayers(players, currentPlayerId),
     showTitle: () => engineRef.current?.showTitle(),
     handleTextInput: (value: string) => engineRef.current?.handleTextInput(value),
     handleBackspace: () => engineRef.current?.handleBackspace(),
